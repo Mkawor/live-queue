@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Live Excel Queue Display</title>
-  <meta http-equiv="refresh" content="5"> <!-- Auto-refresh every 30s -->
+  <title>Live Queue Display with Sound</title>
+  <meta http-equiv="refresh" content="10"> <!-- Optional auto-refresh -->
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -27,13 +27,27 @@
 <body>
   <header>📋 Live Queue Display</header>
 
-  <iframe 
-    width="1200" 
-    height="700" 
-    frameborder="0" 
-    scrolling="no"
-    src="https://kpjucedumy-my.sharepoint.com/personal/asyraf_kpju_edu_my/_layouts/15/Doc.aspx?sourcedoc={8336a495-63f5-4428-bdb4-0e73ce8b67ed}&action=embedview&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdInConfigurator=True&wdInConfigurator=True">
+  <!-- 🔊 Sound Player -->
+  <audio id="ding" src="https://notificationsounds.com/notification-sounds/glass-569/download/mp3" preload="auto"></audio>
+
+  <!-- 🔁 Embedded Excel -->
+  <iframe id="excelFrame"
+    src="https://kpjucedumy-my.sharepoint.com/personal/asyraf_kpju_edu_my/_layouts/15/Doc.aspx?sourcedoc={8336a495-63f5-4428-bdb4-0e73ce8b67ed}&action=embedview&wdAllowInteractivity=False&ActiveCell='Sheet1'!C3&wdHideGridlines=True&wdInConfigurator=True"
+    frameborder="0" scrolling="no">
   </iframe>
 
+  <script>
+    let previousURL = document.getElementById("excelFrame").src;
+
+    setInterval(() => {
+      let currentURL = document.getElementById("excelFrame").src;
+
+      // You can replace this with custom logic in the future using a data API
+      if (currentURL !== previousURL) {
+        document.getElementById("ding").play();
+        previousURL = currentURL;
+      }
+    }, 10000); // Check every 10 seconds
+  </script>
 </body>
 </html>
