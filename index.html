@@ -4,10 +4,11 @@
   <meta charset="UTF-8">
   <title>KPJ Queue Display</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
+    html, body {
       margin: 0;
+      padding: 0;
       background-color: #967F65;
+      font-family: Arial, sans-serif;
       color: white;
       font-weight: bold;
       text-align: center;
@@ -75,6 +76,7 @@
       width: 100%;
       height: 100%;
       border: none;
+      background-color: #967F65; /* Force iframe background */
       transition: opacity 0.8s ease-in-out;
     }
 
@@ -133,7 +135,7 @@
   </div>
 
   <script>
-    // 🔊 Enable sound on bell click
+    // 🔔 Enable sound
     let soundEnabled = false;
     function startAlert() {
       soundEnabled = true;
@@ -149,7 +151,7 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // 🔁 Dual iframe switch
+    // 🔁 Iframe Refresh
     const srcBase = "https://kpjucedumy-my.sharepoint.com/personal/asyraf_kpju_edu_my/_layouts/15/Doc.aspx?sourcedoc={8336a495-63f5-4428-bdb4-0e73ce8b67ed}&action=embedview&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=False&wdInConfigurator=True";
 
     const iframe1 = document.getElementById("iframe1");
@@ -182,7 +184,7 @@
       };
     }
 
-    // Start loading iframe
+    // First load
     iframe1.src = srcBase;
     setInterval(refreshIframes, 10000);
   </script>
