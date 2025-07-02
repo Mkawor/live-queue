@@ -29,8 +29,21 @@
       gap: 15px;
     }
 
+    .logo-box {
+      background: white;
+      padding: 8px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .logo {
       height: 50px;
+    }
+
+    .center-text {
+      text-align: center;
     }
 
     .main-title {
@@ -105,11 +118,13 @@
 <body>
   <header>
     <div class="left">
-      <img src="https://cdn.eduadvisor.my/institution/kpju/2025/04/ea-inst-logo-kpj-hc-jb.webp" alt="KPJ Logo" class="logo">
-      <div>
-        <div class="main-title">WELCOME TO KPJ HEALTHCARE COLLEGE JB</div>
-        <div class="sub-title">YOU WILL BE CALLED IN A MOMENT</div>
+      <div class="logo-box">
+        <img src="https://cdn.eduadvisor.my/institution/kpju/2025/04/ea-inst-logo-kpj-hc-jb.webp" alt="KPJ Logo" class="logo">
       </div>
+    </div>
+    <div class="center-text">
+      <div class="main-title">WELCOME TO KPJ HEALTHCARE COLLEGE JB</div>
+      <div class="sub-title">YOU WILL BE CALLED IN A MOMENT</div>
     </div>
     <div class="right">
       <div class="clock" id="clock">--:--:--</div>
