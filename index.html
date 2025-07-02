@@ -13,13 +13,20 @@
     header {
       background-color: #0078d4;
       color: white;
-      padding: 20px;
-      font-size: 22px;
+      padding: 20px 10px 10px 10px;
+    }
+    .main-title {
+      font-size: 24px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 12px;
       flex-wrap: wrap;
+    }
+    .sub-title {
+      font-size: 18px;
+      margin-top: 6px;
+      color: #ffffffcc;
     }
     .sound-btn {
       background: none;
@@ -32,21 +39,27 @@
       width: 100%;
       height: 90vh;
       border: none;
+      overflow: hidden; /* Hides scrollbars visually */
     }
   </style>
 </head>
 <body>
   <header>
-    WELCOME TO KPJ HEALTHCARE COLLEGE JB — YOU WILL BE CALLED IN A MOMENT
-    <button class="sound-btn" onclick="startAlert()" title="Enable Sound">🔔</button>
+    <div class="main-title">
+      WELCOME TO KPJ HEALTHCARE COLLEGE JB
+      <button class="sound-btn" onclick="startAlert()" title="Enable Sound">🔔</button>
+    </div>
+    <div class="sub-title">
+      YOU WILL BE CALLED IN A MOMENT
+    </div>
   </header>
 
   <!-- 🔊 Sound file -->
   <audio id="ding" src="https://notificationsounds.com/notification-sounds/glass-569/download/mp3" preload="auto"></audio>
 
-  <!-- 🔁 Embedded Excel -->
+  <!-- 🔁 Embedded Excel (scrollbars disabled) -->
   <iframe id="excelFrame"
-    src="https://kpjucedumy-my.sharepoint.com/personal/asyraf_kpju_edu_my/_layouts/15/Doc.aspx?sourcedoc={8336a495-63f5-4428-bdb4-0e73ce8b67ed}&action=embedview&wdAllowInteractivity=False&ActiveCell='Sheet1'!C3&wdHideGridlines=True&wdInConfigurator=True"
+    src="https://kpjucedumy-my.sharepoint.com/personal/asyraf_kpju_edu_my/_layouts/15/Doc.aspx?sourcedoc={8336a495-63f5-4428-bdb4-0e73ce8b67ed}&action=embedview&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=False&wdInConfigurator=True"
     frameborder="0" scrolling="no">
   </iframe>
 
