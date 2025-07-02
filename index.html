@@ -12,37 +12,46 @@
       font-weight: bold;
       text-align: center;
     }
+
     header {
+      background-color: #967F65;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 30px;
+      padding: 15px 30px;
       flex-wrap: wrap;
     }
+
     .left {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 15px;
     }
+
     .logo {
       height: 50px;
     }
+
     .main-title {
-      font-size: 24px;
+      font-size: 26px;
     }
+
     .sub-title {
       font-size: 18px;
-      color: #fff;
-      margin-top: 4px;
+      color: #ffffffcc;
+      margin-top: 5px;
     }
+
     .right {
       display: flex;
       align-items: center;
       gap: 15px;
     }
+
     .clock {
       font-size: 18px;
     }
+
     .sound-btn {
       background: none;
       border: none;
@@ -50,12 +59,15 @@
       cursor: pointer;
       color: white;
     }
+
     .iframe-wrapper {
       position: relative;
       width: 100%;
       height: 80vh;
       overflow: hidden;
+      background-color: #967F65;
     }
+
     iframe {
       position: absolute;
       top: 0;
@@ -65,14 +77,17 @@
       border: none;
       transition: opacity 0.8s ease-in-out;
     }
+
     iframe.hidden {
       opacity: 0;
       pointer-events: none;
     }
+
     iframe.visible {
       opacity: 1;
       pointer-events: all;
     }
+
     .qr-wrapper {
       position: absolute;
       bottom: 20px;
@@ -81,6 +96,7 @@
       padding: 5px;
       border-radius: 8px;
     }
+
     .qr-wrapper img {
       height: 100px;
       width: 100px;
@@ -102,29 +118,29 @@
     </div>
   </header>
 
-  <!-- 🔊 Sound -->
+  <!-- 🔊 Audio Alert -->
   <audio id="ding" src="https://notificationsounds.com/notification-sounds/glass-569/download/mp3" preload="auto"></audio>
 
-  <!-- 🔁 Seamless Refresh -->
+  <!-- 🔁 Seamless Iframe Refresh -->
   <div class="iframe-wrapper">
     <iframe id="iframe1" class="visible"></iframe>
     <iframe id="iframe2" class="hidden"></iframe>
 
-    <!-- 📱 QR Code Display -->
+    <!-- 📱 QR Code Box -->
     <div class="qr-wrapper">
       <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://kpj.edu.my&size=100x100" alt="QR Code">
     </div>
   </div>
 
   <script>
-    // 🔔 Sound activation
+    // 🔊 Enable sound on bell click
     let soundEnabled = false;
     function startAlert() {
       soundEnabled = true;
       document.getElementById("ding").play();
     }
 
-    // 🕒 Real-time clock
+    // 🕒 Live Clock
     function updateClock() {
       const now = new Date();
       const time = now.toLocaleTimeString('en-GB', { hour12: false });
@@ -133,12 +149,11 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // 🔁 Excel display logic
+    // 🔁 Dual iframe switch
     const srcBase = "https://kpjucedumy-my.sharepoint.com/personal/asyraf_kpju_edu_my/_layouts/15/Doc.aspx?sourcedoc={8336a495-63f5-4428-bdb4-0e73ce8b67ed}&action=embedview&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=False&wdInConfigurator=True";
 
     const iframe1 = document.getElementById("iframe1");
     const iframe2 = document.getElementById("iframe2");
-
     let isIframe1Visible = true;
     let previousHash = "";
 
@@ -167,7 +182,7 @@
       };
     }
 
-    // Initial load
+    // Start loading iframe
     iframe1.src = srcBase;
     setInterval(refreshIframes, 10000);
   </script>
