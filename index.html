@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Live Queue Display with Sound</title>
-  <meta http-equiv="refresh" content="5">
+  <title>Queue Display with Sound</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -15,11 +14,12 @@
       background-color: #0078d4;
       color: white;
       padding: 20px;
-      font-size: 24px;
+      font-size: 22px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 12px;
+      flex-wrap: wrap;
     }
     .sound-btn {
       background: none;
@@ -37,7 +37,7 @@
 </head>
 <body>
   <header>
-    📋 Live Queue Display
+    WELCOME TO KPJ HEALTHCARE COLLEGE JB — YOU WILL BE CALLED IN A MOMENT
     <button class="sound-btn" onclick="startAlert()" title="Enable Sound">🔔</button>
   </header>
 
@@ -51,23 +51,26 @@
   </iframe>
 
   <script>
-    let previousURL = document.getElementById("excelFrame").src;
     let soundEnabled = false;
+    let previousURL = document.getElementById("excelFrame").src;
 
     function startAlert() {
       soundEnabled = true;
-      document.getElementById("ding").play(); // Initial play to unlock sound
+      document.getElementById("ding").play(); // Unlock sound
     }
 
+    // 🔁 Auto-reload iframe every 10s & detect changes
     setInterval(() => {
-      if (!soundEnabled) return;
+      const iframe = document.getElementById("excelFrame");
+      const newURL = iframe.src.split("#")[0] + "#" + new Date().getTime(); // force refresh
 
-      const currentURL = document.getElementById("excelFrame").src;
-      if (currentURL !== previousURL) {
+      iframe.src = newURL;
+
+      if (soundEnabled && newURL !== previousURL) {
         document.getElementById("ding").play();
-        previousURL = currentURL;
+        previousURL = newURL;
       }
-    }, 10000); // Check every 10 seconds
+    }, 10000);
   </script>
 </body>
 </html>
