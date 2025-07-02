@@ -16,27 +16,35 @@
       color: white;
       padding: 20px;
       font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .sound-btn {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: white;
     }
     iframe {
       width: 100%;
-      height: 80vh;
+      height: 90vh;
       border: none;
-    }
-    button {
-      margin: 20px;
-      padding: 10px 20px;
-      font-size: 18px;
     }
   </style>
 </head>
 <body>
-  <header>📋 Live Queue Display</header>
+  <header>
+    📋 Live Queue Display
+    <button class="sound-btn" onclick="startAlert()" title="Enable Sound">🔔</button>
+  </header>
 
-  <button onclick="startAlert()">🔔 Start Queue Sound</button>
-
-  <!-- Sound file -->
+  <!-- 🔊 Sound file -->
   <audio id="ding" src="https://notificationsounds.com/notification-sounds/glass-569/download/mp3" preload="auto"></audio>
 
+  <!-- 🔁 Embedded Excel -->
   <iframe id="excelFrame"
     src="https://kpjucedumy-my.sharepoint.com/personal/asyraf_kpju_edu_my/_layouts/15/Doc.aspx?sourcedoc={8336a495-63f5-4428-bdb4-0e73ce8b67ed}&action=embedview&wdAllowInteractivity=False&ActiveCell='Sheet1'!C3&wdHideGridlines=True&wdInConfigurator=True"
     frameborder="0" scrolling="no">
@@ -48,8 +56,7 @@
 
     function startAlert() {
       soundEnabled = true;
-      document.getElementById("ding").play(); // First play to unlock audio
-      alert("🔔 Queue alert is now active!");
+      document.getElementById("ding").play(); // Initial play to unlock sound
     }
 
     setInterval(() => {
@@ -60,7 +67,7 @@
         document.getElementById("ding").play();
         previousURL = currentURL;
       }
-    }, 10000);
+    }, 10000); // Check every 10 seconds
   </script>
 </body>
 </html>
