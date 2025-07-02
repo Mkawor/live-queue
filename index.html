@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Live Queue Display with Sound</title>
-  <meta http-equiv="refresh" content="10"> <!-- Optional auto-refresh -->
+  <meta http-equiv="refresh" content="10">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -19,18 +19,24 @@
     }
     iframe {
       width: 100%;
-      height: 90vh;
+      height: 80vh;
       border: none;
+    }
+    button {
+      margin: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
     }
   </style>
 </head>
 <body>
   <header>📋 Live Queue Display</header>
 
-  <!-- 🔊 Sound Player -->
+  <button onclick="startAlert()">🔔 Start Queue Sound</button>
+
+  <!-- Sound file -->
   <audio id="ding" src="https://notificationsounds.com/notification-sounds/glass-569/download/mp3" preload="auto"></audio>
 
-  <!-- 🔁 Embedded Excel -->
   <iframe id="excelFrame"
     src="https://kpjucedumy-my.sharepoint.com/personal/asyraf_kpju_edu_my/_layouts/15/Doc.aspx?sourcedoc={8336a495-63f5-4428-bdb4-0e73ce8b67ed}&action=embedview&wdAllowInteractivity=False&ActiveCell='Sheet1'!C3&wdHideGridlines=True&wdInConfigurator=True"
     frameborder="0" scrolling="no">
@@ -38,16 +44,23 @@
 
   <script>
     let previousURL = document.getElementById("excelFrame").src;
+    let soundEnabled = false;
+
+    function startAlert() {
+      soundEnabled = true;
+      document.getElementById("ding").play(); // First play to unlock audio
+      alert("🔔 Queue alert is now active!");
+    }
 
     setInterval(() => {
-      let currentURL = document.getElementById("excelFrame").src;
+      if (!soundEnabled) return;
 
-      // You can replace this with custom logic in the future using a data API
+      const currentURL = document.getElementById("excelFrame").src;
       if (currentURL !== previousURL) {
         document.getElementById("ding").play();
         previousURL = currentURL;
       }
-    }, 10000); // Check every 10 seconds
+    }, 10000);
   </script>
 </body>
 </html>
