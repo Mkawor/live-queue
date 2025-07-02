@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Queue Display with Sound</title>
+  <title>Queue Display - KPJ</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -28,6 +28,10 @@
       margin-top: 6px;
       color: #ffffffcc;
     }
+    .clock {
+      font-size: 18px;
+      font-weight: normal;
+    }
     .sound-btn {
       background: none;
       border: none;
@@ -35,55 +39,105 @@
       cursor: pointer;
       color: white;
     }
-    iframe {
+    .iframe-wrapper {
+      position: relative;
       width: 100%;
       height: 90vh;
+      overflow: hidden;
+    }
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       border: none;
-      overflow: hidden; /* Hides scrollbars visually */
+      transition: opacity 0.8s ease-in-out;
+    }
+    iframe.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    iframe.visible {
+      opacity: 1;
+      pointer-events: all;
     }
   </style>
 </head>
 <body>
   <header>
     <div class="main-title">
-      WELCOME TO KPJ HEALTHCARE COLLEGE JB
+      <div>WELCOME TO KPJ HEALTHCARE COLLEGE JB</div>
+      <div class="clock" id="clock">--:--:--</div>
       <button class="sound-btn" onclick="startAlert()" title="Enable Sound">🔔</button>
     </div>
-    <div class="sub-title">
-      YOU WILL BE CALLED IN A MOMENT
-    </div>
+    <div class="sub-title">YOU WILL BE CALLED IN A MOMENT</div>
   </header>
 
-  <!-- 🔊 Sound file -->
+  <!-- 🔊 Sound -->
   <audio id="ding" src="https://notificationsounds.com/notification-sounds/glass-569/download/mp3" preload="auto"></audio>
 
-  <!-- 🔁 Embedded Excel (scrollbars disabled) -->
-  <iframe id="excelFrame"
-    src="https://kpjucedumy-my.sharepoint.com/personal/asyraf_kpju_edu_my/_layouts/15/Doc.aspx?sourcedoc={8336a495-63f5-4428-bdb4-0e73ce8b67ed}&action=embedview&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=False&wdInConfigurator=True"
-    frameborder="0" scrolling="no">
-  </iframe>
+  <!-- 🔁 Dual iframe for seamless refresh -->
+  <div class="iframe-wrapper">
+    <iframe id="iframe1" class="visible"></iframe>
+    <iframe id="iframe2" class="hidden"></iframe>
+  </div>
 
   <script>
+    // 🔊 Sound activation
     let soundEnabled = false;
-    let previousURL = document.getElementById("excelFrame").src;
-
     function startAlert() {
       soundEnabled = true;
-      document.getElementById("ding").play(); // Unlock sound
+      document.getElementById("ding").play();
     }
 
-    // 🔁 Auto-reload iframe every 10s & detect changes
-    setInterval(() => {
-      const iframe = document.getElementById("excelFrame");
-      const newURL = iframe.src.split("#")[0] + "#" + new Date().getTime(); // force refresh
+    // 🕒 Clock updater
+    function updateClock() {
+      const now = new Date();
+      const time = now.toLocaleTimeString('en-GB', { hour12: false });
+      document.getElementById("clock").textContent = time;
+    }
+    setInterval(updateClock, 1000);
+    updateClock(); // Initial call
 
-      iframe.src = newURL;
+    // 🔁 Excel refresh logic
+    const srcBase = "https://kpjucedumy-my.sharepoint.com/personal/asyraf_kpju_edu_my/_layouts/15/Doc.aspx?sourcedoc={8336a495-63f5-4428-bdb4-0e73ce8b67ed}&action=embedview&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=False&wdInConfigurator=True";
+    const iframe1 = document.getElementById("iframe1");
+    const iframe2 = document.getElementById("iframe2");
 
-      if (soundEnabled && newURL !== previousURL) {
-        document.getElementById("ding").play();
-        previousURL = newURL;
-      }
-    }, 10000);
+    let isIframe1Visible = true;
+    let previousHash = "";
+
+    function refreshIframes() {
+      const timestamp = new Date().getTime();
+      const newSrc = srcBase + "#" + timestamp;
+
+      const hiddenIframe = isIframe1Visible ? iframe2 : iframe1;
+      const visibleIframe = isIframe1Visible ? iframe1 : iframe2;
+
+      hiddenIframe.src = newSrc;
+
+      hiddenIframe.onload = () => {
+        hiddenIframe.classList.remove("hidden");
+        hiddenIframe.classList.add("visible");
+
+        visibleIframe.classList.remove("visible");
+        visibleIframe.classList.add("hidden");
+
+        if (soundEnabled && hiddenIframe.src !== previousHash) {
+          document.getElementById("ding").play();
+        }
+
+        previousHash = hiddenIframe.src;
+        isIframe1Visible = !isIframe1Visible;
+      };
+    }
+
+    // Initial load
+    iframe1.src = srcBase;
+
+    // Refresh every 10 seconds
+    setInterval(refreshIframes, 10000);
   </script>
 </body>
 </html>
